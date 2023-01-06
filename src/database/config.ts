@@ -9,14 +9,8 @@ const connectOptions: DataSourceOptions = {
   password: 'test',
   database: 'user',
   synchronize: true,
-  entities: [`${path.join(__dirname, '/entities/*{.ts}')}`],
-  migrations: [`${path.join(__dirname, '/migrations/*{.ts}')}`]
+  entities: [`${path.join(__dirname, '/entities/*{.ts, .js}')}`],
+  migrations: [`${path.join(__dirname, '/migrations/*{.ts, .js}')}`]
 }
 
-export const DB = new DataSource(connectOptions)
-
-export const initDB = async () => {
-  const database = await DB.initialize()
-
-  return database
-}
+export const dataSource = new DataSource(connectOptions)
