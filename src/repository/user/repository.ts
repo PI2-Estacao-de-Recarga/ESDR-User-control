@@ -1,6 +1,6 @@
 import { dataSource } from '../../database/config'
 import { User } from '../../database/entities/user'
-import { Repository } from '../port/repository'
+import { Repository } from '../port/user-repository'
 
 interface options {
   name: string
@@ -12,6 +12,26 @@ class UserRepository implements Repository {
   private readonly userRepository
   constructor() {
     this.userRepository = dataSource.getRepository(User)
+  }
+
+  async findOneByCpf(cpf: string): Promise<User | undefined> {
+    const user = await this.userRepository.findOneBy({
+      cpf
+    })
+    if (!user) {
+      return undefined
+    }
+    return user
+  }
+
+  async findOneByEmail(email: string): Promise<User | undefined> {
+    const user = await this.userRepository.findOneBy({
+      email
+    })
+    if (!user) {
+      return undefined
+    }
+    return user
   }
 
   async createUser(params: options): Promise<User | undefined> {
