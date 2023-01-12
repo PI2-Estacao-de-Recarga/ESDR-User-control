@@ -24,6 +24,16 @@ class UserRepository implements Repository {
     return user
   }
 
+  async findToLogin(email: string): Promise<User> {
+    const userPassword = await this.userRepository.find({
+      where: {
+        email 
+      },
+      select: ['password', 'email', 'name', 'id', 'cpf']
+    })
+    return userPassword[0]
+  }
+
   async findOneByEmail(email: string): Promise<User | undefined> {
     const user = await this.userRepository.findOneBy({
       email
