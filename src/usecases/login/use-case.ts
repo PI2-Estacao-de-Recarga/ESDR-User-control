@@ -6,25 +6,22 @@ import { UserLoginResponse } from './domain/login-response'
 import { LoginEmailError } from './errors/login-email-error'
 import { LoginPasswordError } from './errors/login-password-error'
 
-export class LoginUseCase
-  implements
-    UseCase<UserLoginResponse>
-{
+export class LoginUseCase implements UseCase<UserLoginResponse> {
   constructor(
     private userRepository: Repository,
-    private encryptor: Encryptor,
-
+    private encryptor: Encryptor
   ) {}
-  async execute(userData: DataUserLogin): Promise<
-    UseCaseReponse<UserLoginResponse>
-  > {
+
+  async execute(
+    userData: DataUserLogin
+  ): Promise<UseCaseReponse<UserLoginResponse>> {
     let userFound = null
     userFound = await this.userRepository.findToLogin(userData.email)
 
     if (!userFound) {
       return { isSuccess: false, error: new LoginEmailError() }
     }
-    
+
     const checkPassword = this.encryptor.compare(
       userData.password,
       userFound.password

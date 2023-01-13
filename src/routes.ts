@@ -6,5 +6,5 @@ import { makeLoginController } from './factories/controllers/login'
 const routes = Router()
 
 routes.post('/create-user', adaptExpressRoute(makeCreateUserController()))
-routes.post('/login',  adaptExpressRoute(makeLoginController()))
+routes.post('/login', adaptExpressRoute(makeLoginController()))
 export default routes

@@ -27,7 +27,7 @@ class UserRepository implements Repository {
   async findToLogin(email: string): Promise<User> {
     const userPassword = await this.userRepository.find({
       where: {
-        email 
+        email
       },
       select: ['password', 'email', 'name', 'id', 'cpf']
     })

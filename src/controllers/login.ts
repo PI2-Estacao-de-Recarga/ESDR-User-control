@@ -11,7 +11,7 @@ type HttpRequest = {
 type Model =
   | Error
   | {
-      name: string    
+      name: string
       email: string
       cpf: string
     }
