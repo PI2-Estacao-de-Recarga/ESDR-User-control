@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
+import { Payment } from './payments'
 
 @Entity()
 export class User {
@@ -30,4 +32,7 @@ export class User {
 
   @Column({ select: false })
   password: string
+
+  @OneToMany(()=>Payment,(payment)=>payment.user)
+  payments?: Payment[]
 }

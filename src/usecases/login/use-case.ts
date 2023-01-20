@@ -33,7 +33,7 @@ export class LoginUseCase implements UseCase<UserLoginResponse> {
 
     return {
       isSuccess: true,
-      data: {
+      body: {
         email: userFound.email,
         name: userFound.name,
         cpf: userFound.cpf

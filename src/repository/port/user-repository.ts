@@ -1,4 +1,4 @@
-import { User } from '../../database/entities/domain/user'
+import { User } from '../../database/entities/user'
 
 export interface Repository {
   createUser(params: {

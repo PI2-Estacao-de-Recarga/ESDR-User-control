@@ -23,8 +23,8 @@ export class LoginController extends Controller {
 
   async perform(params: HttpRequest): Promise<HttpResponse<Model>> {
     const response = await this.login.execute(params)
-    if (response.isSuccess && response.data) {
-      return success(response.data)
+    if (response.isSuccess && response.body) {
+      return success(response.body)
     } else if (
       !response.isSuccess &&
       response.error instanceof LoginPasswordError
