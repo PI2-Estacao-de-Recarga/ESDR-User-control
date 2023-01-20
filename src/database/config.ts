@@ -3,7 +3,8 @@ import path from 'path'
 
 const connectOptions: DataSourceOptions = {
   type: 'postgres',
-  host: 'localhost',
+  // host: 'localhost',
+  url: process.env.DB_URL,
   port: 5432,
   username: 'postgres',
   password: 'test',
