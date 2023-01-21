@@ -1,3 +1,3 @@
-export interface AuthenticationPix{
-    authentication();
+export interface AuthenticationPix {
+  authentication()
 }
