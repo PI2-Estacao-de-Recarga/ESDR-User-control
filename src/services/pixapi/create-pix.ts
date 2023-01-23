@@ -4,6 +4,7 @@ import {
   CreateOrderResponse
 } from '../../usecases/create-payment/domain/create-payment'
 import { AuthenticationPix } from '../authentication-pix'
+import { CreatePix } from '../create-pix'
 import { HttpService } from '../http-service'
 import { ValidationError } from './errors/validation-error'
 
@@ -44,7 +45,7 @@ interface CreatePaymentApiResponse {
   updated_at: string // Data e hora da última atualização do QR Code
 }
 
-class CreatePixService {
+class CreatePixService implements CreatePix<CreateOrderPix> {
   constructor(
     private axiosClient: HttpService,
     private authenticationService: AuthenticationPix
@@ -70,7 +71,6 @@ class CreatePixService {
     const { token } = await this.authenticationService.authentication()
 
     const requestOrder = this.requestBody(payload)
-
     const { statusCode, body } = await this.axiosClient.post<
       CreatePaymentApiRequest,
       CreatePaymentApiResponse

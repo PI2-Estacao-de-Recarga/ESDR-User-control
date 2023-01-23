@@ -33,6 +33,6 @@ export class User {
   @Column({ select: false })
   password: string
 
-  @OneToMany(()=>Payment,(payment)=>payment.user)
+  @OneToMany(() => Payment, (payment) => payment.user)
   payments?: Payment[]
 }

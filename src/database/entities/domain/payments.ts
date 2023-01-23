@@ -1,24 +1,18 @@
-import { StatusEnum } from "../enums/status";
-import { User } from "./user";
+import { StatusEnum } from '../enums/status'
+import { User } from './user'
 
 export type Payments = {
-    qrCode: string
+  qrCode: string
 
-    qrCodeText: string
+  qrCodeText: string
 
-    status: StatusEnum
+  status: StatusEnum
 
-    totalAmount: number
+  totalAmount: number
 
-    externalId?: string
+  externalId?: string
 
-    end2endId: string
+  documentNumber: number
 
-    searchId: string;
-
-    documentNumber: number;
-
-    pixKeyBody?: string;
-
-    user: User;
+  user: User
 }

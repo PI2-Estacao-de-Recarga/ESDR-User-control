@@ -1,3 +1,5 @@
+import { AuthenticationResponse } from '../controllers/helpers/authentication-service'
+
 export interface AuthenticationPix {
-  authentication()
+  authentication(): Promise<AuthenticationResponse>
 }

@@ -1,4 +1,4 @@
-import { Payments } from "./payments"
+import { Payments } from './payments'
 
 export type User = {
   id?: string
