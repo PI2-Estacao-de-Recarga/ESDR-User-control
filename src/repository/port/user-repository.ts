@@ -10,4 +10,5 @@ export interface Repository {
   findOneByCpf(cpf: string): Promise<User | undefined>
   findOneByEmail(email: string): Promise<User | undefined>
   findToLogin(email: string): Promise<User | undefined>
+  findOneById(userId: string): Promise<User | undefined>
 }
