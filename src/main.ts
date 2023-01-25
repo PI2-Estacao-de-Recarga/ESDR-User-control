@@ -12,7 +12,7 @@ dataSource
     console.error('Error during Data Source initialization:', err)
   })
 
-  const port = Number(process.env.PORT) || 4001
+const port = Number(process.env.PORT) || 4001
 
 const app = express()
 
