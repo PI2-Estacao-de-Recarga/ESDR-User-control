@@ -44,6 +44,16 @@ class UserRepository implements Repository {
     return user
   }
 
+  async findOneById(userId: string): Promise<User | undefined> {
+    const user = await this.userRepository.findOneBy({
+      id: userId
+    })
+    if (!user) {
+      return undefined
+    }
+    return user
+  }
+
   async createUser(params: options): Promise<User | undefined> {
     const { name, email, cpf, password } = params
 
