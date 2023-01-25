@@ -1,5 +1,7 @@
 export interface UserLoginResponse {
-    email: string
-    name: string
-    cpf: string
+  token: string
+  email: string
+  name: string
+  cpf: string
+  expireIn: string
 }

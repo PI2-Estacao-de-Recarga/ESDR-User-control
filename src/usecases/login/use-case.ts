@@ -1,4 +1,5 @@
 import { Encryptor } from '../../adapters/bcrypt-adapter'
+import { Token } from '../../adapters/token-adapter'
 import { Repository } from '../../repository/port/user-repository'
 import { UseCase, UseCaseReponse } from '../domain/use-case'
 import { DataUserLogin } from './domain/login-request'
@@ -9,7 +10,8 @@ import { LoginPasswordError } from './errors/login-password-error'
 export class LoginUseCase implements UseCase<UserLoginResponse> {
   constructor(
     private userRepository: Repository,
-    private encryptor: Encryptor
+    private encryptor: Encryptor,
+    private createToken: Token
   ) {}
 
   async execute(
@@ -31,12 +33,21 @@ export class LoginUseCase implements UseCase<UserLoginResponse> {
       return { isSuccess: false, error: new LoginPasswordError() }
     }
 
+    const timeExpire = '600s'
+    const token = this.createToken.createToken(
+      { userId: userFound.id, email: userFound.email, cpf: userFound.cpf },
+      'QvyZPuDgia9HbF8UBShd6ljoLEzxcTkO',
+      { expiresIn: timeExpire }
+    )
+
     return {
       isSuccess: true,
       data: {
+        token,
         email: userFound.email,
         name: userFound.name,
-        cpf: userFound.cpf
+        cpf: userFound.cpf,
+        expireIn: timeExpire
       }
     }
   }
