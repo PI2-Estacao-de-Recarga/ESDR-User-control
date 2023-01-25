@@ -32,7 +32,7 @@ class AuthenticationService implements AuthenticationPix {
       Token,
       TokenResponse
     >({
-      url: 'https://login-api-sandbox.transfeera.com',
+      url: 'https://login-api-sandbox.transfeera.com/authorization',
       body: tokenRequest,
       headers: {
         'Content-Type': 'application/json'

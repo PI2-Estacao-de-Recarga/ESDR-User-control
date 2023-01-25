@@ -75,7 +75,7 @@ class CreatePixService implements CreatePix<CreateOrderPix> {
       CreatePaymentApiRequest,
       CreatePaymentApiResponse
     >({
-      url: 'https://api-sandbox.transfeera.com/pix/qrcode/static',
+      url: 'https://api-sandbox.transfeera.com/pix/qrcode/collection/immediate',
       body: requestOrder,
       headers: {
         'Content-Type': 'application/json',

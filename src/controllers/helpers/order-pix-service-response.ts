@@ -2,8 +2,8 @@ interface OrderPixServiceResponse<T> {
   success: boolean
   error?: Error
   info?: T
-  externalResponse?: object
-  externalRequest?: object
+  externalResponse?: any
+  externalRequest?: any
 }
 
 export { OrderPixServiceResponse }

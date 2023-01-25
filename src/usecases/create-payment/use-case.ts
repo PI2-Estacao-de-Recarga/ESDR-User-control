@@ -26,6 +26,8 @@ export class CreatePixUseCase implements UseCase<CreateOrderResponse> {
       }
       const responsePix = await this.createPix.paymentRequest(payload)
 
+      console.log(responsePix.externalResponse.emv_payload)
+
       if (!responsePix.success) {
         return {
           isSuccess: false,
@@ -34,11 +36,11 @@ export class CreatePixUseCase implements UseCase<CreateOrderResponse> {
       }
       responsePix.info.status = 'PENDING'
       const userPayment = {
-        qrCode: responsePix.info.image_base64,
-        externalId: responsePix.info.pxid,
-        qrCodeText: responsePix.info.emv_payload,
+        qrCode: responsePix.externalResponse.image_base64,
+        externalId: responsePix.externalResponse.txid,
+        qrCodeText: responsePix.externalResponse.emv_payload,
         status: responsePix.info.status,
-        totalAmount: payload.value,
+        totalAmount: responsePix.externalResponse.original_value,
         documentNumber: payload.document,
         user
       }
@@ -47,8 +49,8 @@ export class CreatePixUseCase implements UseCase<CreateOrderResponse> {
         return {
           isSuccess: true,
           body: {
-            qrCode: payment.qrCode,
-            qrCodeText: payment.qrCodeText,
+            qrCode: responsePix.externalResponse.image_base64,
+            qrCodeText: responsePix.externalResponse.emv_payload,
             status: payment.status,
             totalAmount: payment.totalAmount,
             documentNumber: payment.documentNumber
