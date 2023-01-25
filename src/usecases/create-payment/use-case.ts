@@ -46,7 +46,13 @@ export class CreatePixUseCase implements UseCase<CreateOrderResponse> {
       if (payment) {
         return {
           isSuccess: true,
-          body: payment
+          body: {
+            qrCode: payment.qrCode,
+            qrCodeText: payment.qrCodeText,
+            status: payment.status,
+            totalAmount: payment.totalAmount,
+            documentNumber: payment.documentNumber
+          }
         }
       } else {
         return { isSuccess: false, error: new PaymentError() }
