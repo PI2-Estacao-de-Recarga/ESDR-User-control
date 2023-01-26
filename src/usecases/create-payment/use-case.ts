@@ -26,8 +26,6 @@ export class CreatePixUseCase implements UseCase<CreateOrderResponse> {
       }
       const responsePix = await this.createPix.paymentRequest(payload)
 
-      console.log(responsePix.externalResponse.emv_payload)
-
       if (!responsePix.success) {
         return {
           isSuccess: false,
