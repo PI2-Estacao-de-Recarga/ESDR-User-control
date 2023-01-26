@@ -24,7 +24,11 @@ export class CreatePixUseCase implements UseCase<CreateOrderResponse> {
           error: new GetUserError()
         }
       }
-      const responsePix = await this.createPix.paymentRequest(payload)
+      const responsePix = await this.createPix.paymentRequest({
+        ...payload,
+        name: user.name,
+        document: user.cpf
+      })
 
       if (!responsePix.success) {
         return {
@@ -39,7 +43,7 @@ export class CreatePixUseCase implements UseCase<CreateOrderResponse> {
         qrCodeText: responsePix.externalResponse.emv_payload,
         status: responsePix.info.status,
         totalAmount: responsePix.externalResponse.original_value,
-        documentNumber: payload.document,
+        documentNumber: user.cpf,
         user
       }
       const payment = await this.paymentRepository.createPayment(userPayment)

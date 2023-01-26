@@ -12,15 +12,16 @@ interface CreatePaymentApiRequest {
   txid?: string
   integration_id?: string
   pix_key: string
+  expiration: number
   original_value: number
   payer_question?: string
   additional_info?: {
     key?: string
     value: string
   }
-  payer?: {
-    name: string
-    document: string
+  payer: {
+    name?: string
+    document?: string
   }
   reject_unknown_payer?: true
 }
@@ -53,6 +54,7 @@ class CreatePixService implements CreatePix<CreateOrderPix> {
 
   private requestBody(payload: CreateOrderPix): CreatePaymentApiRequest {
     return {
+      expiration: 3600,
       pix_key: payload.pixKey,
       original_value: payload.value,
       payer: {
