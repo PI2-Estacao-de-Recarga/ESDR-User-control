@@ -11,9 +11,11 @@ type HttpRequest = {
 type Model =
   | Error
   | {
+      token: string
       name: string
       email: string
       cpf: string
+      expireIn: string
     }
 
 export class LoginController extends Controller {
