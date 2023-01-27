@@ -16,8 +16,8 @@ export class GetUserController extends Controller {
 
   async perform(params: HttpRequest): Promise<HttpResponse<Model>> {
     const response = await this.getUser.execute(params)
-    if (response.isSuccess && response.data) {
-      return success(response.data)
+    if (response.isSuccess && response.body) {
+      return success(response.body)
     } else if (!response.isSuccess && response.error instanceof GetUserError) {
       return badRequest(response.error)
     } else {

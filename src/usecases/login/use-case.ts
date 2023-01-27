@@ -42,7 +42,7 @@ export class LoginUseCase implements UseCase<UserLoginResponse> {
 
     return {
       isSuccess: true,
-      data: {
+      body: {
         token,
         email: userFound.email,
         name: userFound.name,
