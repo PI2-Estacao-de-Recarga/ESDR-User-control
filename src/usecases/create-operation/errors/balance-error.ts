@@ -8,6 +8,6 @@ export class BalanceError extends Error {
 export class UpdateBalanceError extends Error {
     constructor() {
         super('Erro ao atualizar saldo de créditos do usuário')
-        this.name = 'BalanceError'
+        this.name = 'UpdateBalanceError'
         }
     }
