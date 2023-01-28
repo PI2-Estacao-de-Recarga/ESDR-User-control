@@ -2,11 +2,12 @@ import { Repository } from '../../repository/port/user-repository'
 import { OpRepository } from '../../repository/port/operation-repository'
 import { CreateOperationRequest } from './domain/create-operation-request'
 import { CreateOperationError } from './errors/create-operation-error'
-import { ErroDeTeste } from './errors/teste-error'
+import { OperationTypeError } from './errors/operation-type-error'
+import { BalanceError, UpdateBalanceError } from './errors/balance-error'
 import { CreateOperationResponse } from './domain/create-operation-response'
 import { UseCase, UseCaseReponse } from '../domain/use-case'
-import { Encryptor } from '../../adapters/bcrypt-adapter'
 import { GetUserError } from '../get-user/errors/get-user-error'
+import { OperationTypeEnum } from '../../database/entities/enums/operationType'
 
 export class CreateOperationUseCase implements UseCase<CreateOperationResponse> {
   constructor(
@@ -23,32 +24,53 @@ export class CreateOperationUseCase implements UseCase<CreateOperationResponse> 
         if (!user) {
             return {
                 isSuccess: false,
-            error: new GetUserError()
+                error: new GetUserError()
             }
         }
 
-      if (payload.operationType == 'USO') {
-        console.log("UHUUUUUUUL")
+      if (payload.operationType !== OperationTypeEnum.USO && payload.operationType !== OperationTypeEnum.COMPRA) {
         return {
           isSuccess: false,
-          error: new ErroDeTeste()
+          error: new OperationTypeError()
         }
       }
-
+      
+      if (payload.operationType == OperationTypeEnum.USO && payload.creditAmount > user.balance) {
+        return {
+          isSuccess: false,
+          error: new BalanceError()
+        }
+      }
+      
       const userOperation = {
         operationType: payload.operationType,
         creditAmount: payload.creditAmount,
         user
       }
+      
+      const operation = await this.operationRepository.createOperation(userOperation)
 
-     const operation = await this.operationRepository.createOperation(userOperation)
-
+      let newBalance = 0
+      if (payload.operationType == OperationTypeEnum.USO) {
+        newBalance = user.balance - payload.creditAmount
+      } else {
+        newBalance = user.balance + payload.creditAmount
+      }
+      
       if (operation) {
+        const response = await this.userRepository.updateBalance(newBalance, payload.userId)
+        if (!response) {
+            return {
+                isSuccess: false,
+                error: new UpdateBalanceError()
+            }
+        }
         return { 
             isSuccess: true, 
             body: {
                 operationType: operation.operationType,
                 creditAmount: operation.creditAmount,
+                currentBalance: newBalance,
             }
         }
       } else {
@@ -58,6 +80,7 @@ export class CreateOperationUseCase implements UseCase<CreateOperationResponse> 
         }
       }
     } catch (error) {
+
       console.log(error)
       return {
         isSuccess: false,

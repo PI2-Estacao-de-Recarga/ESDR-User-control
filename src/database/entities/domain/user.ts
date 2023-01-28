@@ -1,3 +1,4 @@
+import { Operation } from '../operation'
 import { Payments } from './payments'
 
 export type User = {
@@ -11,9 +12,13 @@ export type User = {
 
   password: string
 
+  balance: number
+
   createdAt?: Date
 
   updatedAt?: Date
 
   payment?: Payments[]
+
+  operation?: Operation[]
 }

@@ -1,3 +1,4 @@
+import { UpdateResult } from 'typeorm'
 import { dataSource } from '../../database/config'
 import { User } from '../../database/entities/user'
 import { Repository } from '../port/user-repository'
@@ -67,6 +68,19 @@ class UserRepository implements Repository {
     await this.userRepository.save(user)
     return user
   }
+
+  async updateBalance(newBalance: number, userId: string): Promise<UpdateResult | undefined> {
+
+    const result = await this.userRepository.update({
+      id: userId,
+    }, {
+      balance: newBalance,
+    })
+ 
+    // await this.userRepository.save(user)
+    return result
+  }
+
 }
 
 export default UserRepository

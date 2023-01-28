@@ -1,4 +1,4 @@
-import OperationRepository from '../../repository/operation'
+import OperationRepository from '../../repository/user/operation'
 import UserRepository from '../../repository/user/repository'
 import { CreateOperationUseCase } from '../../usecases/create-operation/use-case'
 

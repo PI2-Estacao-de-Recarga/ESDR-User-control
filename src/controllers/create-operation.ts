@@ -1,7 +1,9 @@
-import { CreateOperationError } from '../usecases/create-operation/errors/create-operation-error'
+import { GetUserError } from '../usecases/get-user/errors/get-user-error'
 import { CreateOperationUseCase } from '../usecases/create-operation/use-case'
 import { Controller } from './domain/controller'
 import { badRequest, HttpResponse, serverError, success } from './helpers/http'
+import { OperationTypeError } from '../usecases/create-operation/errors/operation-type-error'
+import { BalanceError, UpdateBalanceError } from '../usecases/create-operation/errors/balance-error'
 
 type HttpRequest = {
   operationType: string
@@ -26,7 +28,22 @@ export class CreateOperationController extends Controller {
       return success(response.body)
     } else if (
       !response.isSuccess &&
-      response.error instanceof CreateOperationError
+      response.error instanceof GetUserError
+    ) {
+      return badRequest(response.error)
+    } else if (
+      !response.isSuccess &&
+      response.error instanceof OperationTypeError
+    ) {
+      return badRequest(response.error)
+    } else if (
+      !response.isSuccess &&
+      response.error instanceof BalanceError
+    ) {
+      return badRequest(response.error)
+    } else if (
+      !response.isSuccess &&
+      response.error instanceof UpdateBalanceError
     ) {
       return badRequest(response.error)
     } else {

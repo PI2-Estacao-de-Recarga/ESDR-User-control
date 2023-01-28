@@ -1,6 +1,6 @@
-import { dataSource } from '../database/config'
-import { Operation } from '../database/entities/operation'
-import { OpRepository } from './port/operation-repository'
+import { dataSource } from '../../database/config'
+import { Operation } from '../../database/entities/operation'
+import { OpRepository } from '../port/operation-repository'
 
 class OperationRepository implements OpRepository {
   private readonly operationRepository

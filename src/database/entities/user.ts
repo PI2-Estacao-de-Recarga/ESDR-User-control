@@ -34,6 +34,9 @@ export class User {
   @Column({ select: false })
   password: string
 
+  @Column({ default: 0 })
+  balance: number
+
   @OneToMany(() => Payment, (payment) => payment.user)
   payments?: Payment[]
 
