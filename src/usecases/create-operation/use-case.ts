@@ -35,7 +35,7 @@ export class CreateOperationUseCase implements UseCase<CreateOperationResponse> 
         }
       }
       
-      if (payload.operationType == OperationTypeEnum.USO && payload.creditAmount > user.balance) {
+      if (payload.operationType === OperationTypeEnum.USO && payload.creditAmount > user.balance) {
         return {
           isSuccess: false,
           error: new BalanceError()
@@ -51,7 +51,7 @@ export class CreateOperationUseCase implements UseCase<CreateOperationResponse> 
       const operation = await this.operationRepository.createOperation(userOperation)
 
       let newBalance = 0
-      if (payload.operationType == OperationTypeEnum.USO) {
+      if (payload.operationType === OperationTypeEnum.USO) {
         newBalance = user.balance - payload.creditAmount
       } else {
         newBalance = user.balance + payload.creditAmount
