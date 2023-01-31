@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
+import { Payment } from './payments'
+import { Operation } from './operation'
 
 @Entity()
 export class User {
@@ -30,4 +33,13 @@ export class User {
 
   @Column({ select: false })
   password: string
+
+  @Column({ default: 0 })
+  balance: number
+
+  @OneToMany(() => Payment, (payment) => payment.user)
+  payments?: Payment[]
+
+  @OneToMany(() => Operation, (operation) => operation.user)
+  operations?: Operation[]
 }

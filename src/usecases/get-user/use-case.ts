@@ -4,7 +4,7 @@ import { UseCase, UseCaseReponse } from '../domain/use-case'
 import { GetUserError } from './errors/get-user-error'
 
 export interface FindUser {
-  userId?: string
+  userId: string
 }
 
 export class GetUserUseCase implements UseCase<User> {
@@ -23,7 +23,7 @@ export class GetUserUseCase implements UseCase<User> {
         }
       }
       if (userFound) {
-        return { isSuccess: true, data: userFound }
+        return { isSuccess: true, body: userFound }
       } else {
         return {
           isSuccess: false,

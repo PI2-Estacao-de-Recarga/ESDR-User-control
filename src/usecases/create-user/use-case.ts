@@ -48,7 +48,7 @@ export class CreateUserUseCase implements UseCase<CreateUserResponse> {
       })
 
       if (user) {
-        return { isSuccess: true, data: { email: user.email, cpf: user.cpf } }
+        return { isSuccess: true, body: { email: user.email, cpf: user.cpf } }
       } else {
         return {
           isSuccess: false,
