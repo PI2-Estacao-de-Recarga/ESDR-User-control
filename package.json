@@ -11,7 +11,7 @@
     "migration:run": "npm run typeorm -- migration:run -d src/database/config.ts",
     "migration:revert": "npm run typeorm -- migration:revert -d src/database/config.ts",
     "dev": "ts-node-dev --max_old_space_size=512 --respawn --transpile-only src/main.ts",
-    "start": "node src/main.ts"
+    "start": "node dist/main.js"
   },
   "repository": "https://github.com/PI2-Estacao-de-Recarga/ESDR-User-control.git",
   "author": "",
