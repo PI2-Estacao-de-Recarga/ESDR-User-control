@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { adaptExpressRoute } from './adapters/express-router'
 import { makeCreatePaymentController } from './factories/controllers/create-payment'
+import { makeCreateOperationController } from './factories/controllers/create-operation'
 import { makeCreateUserController } from './factories/controllers/create-user'
 import { makeGetUserController } from './factories/controllers/get-user'
 import { makeLoginController } from './factories/controllers/login'
@@ -15,6 +16,11 @@ routes.post(
   '/create-payment',
   auth,
   adaptExpressRoute(makeCreatePaymentController())
+)
+routes.post(
+  '/create-operation',
+  auth,
+  adaptExpressRoute(makeCreateOperationController())
 )
 
 export default routes

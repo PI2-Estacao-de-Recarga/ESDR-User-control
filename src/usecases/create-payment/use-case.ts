@@ -55,7 +55,8 @@ export class CreatePixUseCase implements UseCase<CreateOrderResponse> {
             qrCodeText: responsePix.externalResponse.emv_payload,
             status: payment.status,
             totalAmount: payment.totalAmount,
-            documentNumber: payment.documentNumber
+            documentNumber: payment.documentNumber,
+            id: payment.id
           }
         }
       } else {

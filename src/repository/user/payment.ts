@@ -13,6 +13,16 @@ class PaymentRepository implements PayRepository {
 
     return payment
   }
+
+  async findOneById(paymentId: string): Promise<Payment | undefined> {
+    const payment = await this.paymentRepository.findOneBy({
+      id: paymentId
+    })
+    if (!payment) {
+      return undefined
+    }
+    return payment
+  }
 }
 
 export default PaymentRepository
