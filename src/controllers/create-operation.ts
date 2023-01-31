@@ -4,6 +4,8 @@ import { Controller } from './domain/controller'
 import { badRequest, HttpResponse, serverError, success } from './helpers/http'
 import { OperationTypeError } from '../usecases/create-operation/errors/operation-type-error'
 import { BalanceError, UpdateBalanceError } from '../usecases/create-operation/errors/balance-error'
+import { CreateOperationError, MissingPayIdError } from '../usecases/create-operation/errors/create-operation-error'
+import { GetPaymentError } from '../usecases/create-operation/errors/payment-error'
 
 type HttpRequest = {
   operationType: string
@@ -34,6 +36,21 @@ export class CreateOperationController extends Controller {
     } else if (
       !response.isSuccess &&
       response.error instanceof OperationTypeError
+    ) {
+      return badRequest(response.error)
+    } else if (
+      !response.isSuccess &&
+      response.error instanceof MissingPayIdError
+    ) {
+      return badRequest(response.error)
+    } else if (
+      !response.isSuccess &&
+      response.error instanceof GetPaymentError
+    ) {
+      return badRequest(response.error)
+    } else if (
+      !response.isSuccess &&
+      response.error instanceof CreateOperationError
     ) {
       return badRequest(response.error)
     } else if (

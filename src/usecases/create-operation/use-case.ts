@@ -8,11 +8,14 @@ import { CreateOperationResponse } from './domain/create-operation-response'
 import { UseCase, UseCaseReponse } from '../domain/use-case'
 import { GetUserError } from '../get-user/errors/get-user-error'
 import { OperationTypeEnum } from '../../database/entities/enums/operationType'
+import { PayRepository } from '../../repository/port/payment-repository'
+import { GetPaymentError } from './errors/payment-error'
 
 export class CreateOperationUseCase implements UseCase<CreateOperationResponse> {
   constructor(
     private operationRepository: OpRepository,
-    private userRepository: Repository
+    private userRepository: Repository,
+    private paymentRepository: PayRepository
   ) {}
 
   async execute(
@@ -45,7 +48,17 @@ export class CreateOperationUseCase implements UseCase<CreateOperationResponse> 
             error: new MissingPayIdError()
           }
         }
-        newBalance = user.balance + //get payment value from its id
+
+        const pay = await this.paymentRepository.findOneById(payload.paymentId)
+        if (!pay) {
+            return {
+                isSuccess: false,
+                error: new GetPaymentError()
+            }
+        }
+
+        payload.creditAmount = pay.totalAmount
+        newBalance = user.balance + payload.creditAmount
       } else { 
         newBalance = user.balance - payload.creditAmount
 
