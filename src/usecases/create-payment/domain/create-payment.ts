@@ -16,4 +16,5 @@ export interface CreateOrderResponse {
   totalAmount: number
   documentNumber: string
   user?: User
+  id?: string
 }

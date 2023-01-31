@@ -1,7 +1,7 @@
 import { Repository } from '../../repository/port/user-repository'
 import { OpRepository } from '../../repository/port/operation-repository'
 import { CreateOperationRequest } from './domain/create-operation-request'
-import { CreateOperationError } from './errors/create-operation-error'
+import { CreateOperationError, MissingPayIdError } from './errors/create-operation-error'
 import { OperationTypeError } from './errors/operation-type-error'
 import { BalanceError, UpdateBalanceError } from './errors/balance-error'
 import { CreateOperationResponse } from './domain/create-operation-response'
@@ -34,13 +34,28 @@ export class CreateOperationUseCase implements UseCase<CreateOperationResponse> 
           error: new OperationTypeError()
         }
       }
-      
-      if (payload.operationType === OperationTypeEnum.USO && payload.creditAmount > user.balance) {
+
+
+      let newBalance = 0
+
+      if (payload.operationType === OperationTypeEnum.COMPRA) {
+        if (!payload.paymentId) {
+          return {
+            isSuccess: false,
+            error: new MissingPayIdError()
+          }
+        }
+        newBalance = user.balance + //get payment value from its id
+      } else { 
+        newBalance = user.balance - payload.creditAmount
+
+        if (payload.creditAmount > user.balance) {
         return {
           isSuccess: false,
           error: new BalanceError()
         }
       }
+    }
       
       const userOperation = {
         operationType: payload.operationType,
@@ -50,7 +65,6 @@ export class CreateOperationUseCase implements UseCase<CreateOperationResponse> 
       
       const operation = await this.operationRepository.createOperation(userOperation)
 
-      let newBalance = 0
       if (payload.operationType === OperationTypeEnum.USO) {
         newBalance = user.balance - payload.creditAmount
       } else {
