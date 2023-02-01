@@ -1,16 +1,17 @@
 import { User } from '../../database/entities/domain/user'
 import { Repository } from '../../repository/port/user-repository'
 import { UseCase, UseCaseReponse } from '../domain/use-case'
+import { GetUserResponse } from './domain/get-user-response'
 import { GetUserError } from './errors/get-user-error'
 
 export interface FindUser {
   userId: string
 }
 
-export class GetUserUseCase implements UseCase<User> {
+export class GetUserUseCase implements UseCase<GetUserResponse> {
   constructor(private userRepository: Repository) {}
 
-  async execute({ userId }: FindUser): Promise<UseCaseReponse<User>> {
+  async execute({ userId }: FindUser): Promise<UseCaseReponse<GetUserResponse>> {
     try {
       let userFound = null
 
