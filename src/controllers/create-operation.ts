@@ -3,8 +3,14 @@ import { CreateOperationUseCase } from '../usecases/create-operation/use-case'
 import { Controller } from './domain/controller'
 import { badRequest, HttpResponse, serverError, success } from './helpers/http'
 import { OperationTypeError } from '../usecases/create-operation/errors/operation-type-error'
-import { BalanceError, UpdateBalanceError } from '../usecases/create-operation/errors/balance-error'
-import { CreateOperationError, MissingPayIdError } from '../usecases/create-operation/errors/create-operation-error'
+import {
+  BalanceError,
+  UpdateBalanceError
+} from '../usecases/create-operation/errors/balance-error'
+import {
+  CreateOperationError,
+  MissingPayIdError
+} from '../usecases/create-operation/errors/create-operation-error'
 import { GetPaymentError } from '../usecases/create-operation/errors/payment-error'
 
 type HttpRequest = {
@@ -15,8 +21,8 @@ type HttpRequest = {
 type Model =
   | Error
   | {
-        operationType: string
-        creditAmount: number
+      operationType: string
+      creditAmount: number
     }
 
 export class CreateOperationController extends Controller {
@@ -28,10 +34,7 @@ export class CreateOperationController extends Controller {
     const response = await this.createOperation.execute(params)
     if (response.isSuccess && response.body) {
       return success(response.body)
-    } else if (
-      !response.isSuccess &&
-      response.error instanceof GetUserError
-    ) {
+    } else if (!response.isSuccess && response.error instanceof GetUserError) {
       return badRequest(response.error)
     } else if (
       !response.isSuccess &&
@@ -53,10 +56,7 @@ export class CreateOperationController extends Controller {
       response.error instanceof CreateOperationError
     ) {
       return badRequest(response.error)
-    } else if (
-      !response.isSuccess &&
-      response.error instanceof BalanceError
-    ) {
+    } else if (!response.isSuccess && response.error instanceof BalanceError) {
       return badRequest(response.error)
     } else if (
       !response.isSuccess &&
