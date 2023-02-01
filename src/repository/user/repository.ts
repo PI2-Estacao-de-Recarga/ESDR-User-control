@@ -45,10 +45,22 @@ class UserRepository implements Repository {
     return user
   }
 
+  // async findOneById(userId: string): Promise<User | undefined> {
+  //   const user = await this.userRepository.findOneBy({
+  //     id: userId
+  //   })
+  //   if (!user) {
+  //     return undefined
+  //   }
+  //   return user
+  // }
+
   async findOneById(userId: string): Promise<User | undefined> {
-    const user = await this.userRepository.findOneBy({
-      id: userId
-    })
+    const user = await this.userRepository.createQueryBuilder("user")
+    .leftJoinAndSelect("user.operations", "operations")
+    .where("user.id = :id", { id: userId })
+    .getOne()
+
     if (!user) {
       return undefined
     }
