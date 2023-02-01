@@ -30,14 +30,18 @@ class PlugRepository implements PlugsRepository {
   }
 
   async findOneByName(name: string): Promise<Plug | undefined> {
-    const plug = await this.plugRepository.findOneBy({
-      name
+    const plug = await this.plugRepository.find({
+      where: {
+        name
+      },
+      relations: ['user']
     })
     if (!plug) {
       return undefined
     }
-    return plug
+    return plug[0]
   }
+
 }
 
 export default PlugRepository

@@ -9,4 +9,6 @@ export interface PlugsRepository {
     active: boolean,
     newUser: User): Promise<Plug | undefined>
   findOneByName(name: string): Promise<Plug | undefined>
+  // findByUse(inUse: boolean): Promise<Plug[] | undefined>
+  // findByUserId(userId: string): Promise<Plug[] | undefined>
 }
