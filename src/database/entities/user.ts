@@ -8,6 +8,7 @@ import {
 } from 'typeorm'
 import { Payment } from './payments'
 import { Operation } from './operation'
+import { Plug } from './plug'
 
 @Entity()
 export class User {
@@ -42,4 +43,7 @@ export class User {
 
   @OneToMany(() => Operation, (operation) => operation.user)
   operations?: Operation[]
+
+  @OneToMany(() => Plug, (plug) => plug.user)
+  plugs?: Plug[]
 }

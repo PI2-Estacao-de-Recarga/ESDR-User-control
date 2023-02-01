@@ -1,5 +1,6 @@
 import { Operation } from '../operation'
 import { Payments } from './payments'
+import { Plug } from './plug'
 
 export type User = {
   id?: string
@@ -21,4 +22,6 @@ export type User = {
   payment?: Payments[]
 
   operation?: Operation[]
+
+  plugs?: Plug[]
 }
