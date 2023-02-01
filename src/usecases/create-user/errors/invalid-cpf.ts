@@ -4,3 +4,4 @@ export class InvalidCpfError extends Error {
     this.name = 'InvalidCpf'
   }
 }
+

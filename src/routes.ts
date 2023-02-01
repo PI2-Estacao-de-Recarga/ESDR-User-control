@@ -5,6 +5,7 @@ import { makeCreateOperationController } from './factories/controllers/create-op
 import { makeCreateUserController } from './factories/controllers/create-user'
 import { makeGetUserController } from './factories/controllers/get-user'
 import { makeLoginController } from './factories/controllers/login'
+import { makeSetPlugController } from './factories/controllers/set-plug'
 import { auth } from './middlewares/auth'
 
 const routes = Router()
@@ -21,6 +22,11 @@ routes.post(
   '/create-operation',
   auth,
   adaptExpressRoute(makeCreateOperationController())
+)
+routes.post(
+  '/set-plug',
+  auth,
+  adaptExpressRoute(makeSetPlugController())
 )
 
 export default routes
