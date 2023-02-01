@@ -6,8 +6,8 @@ import { UseCase, UseCaseReponse } from '../domain/use-case'
 import { Encryptor } from '../../adapters/bcrypt-adapter'
 import { DifferentPasswords } from './errors/different-passwords-error'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
-import { cpf } from 'cpf-cnpj-validator'; 
-import { InvalidCpf } from './errors/invalid-cpf'
+import { cpf } from 'cpf-cnpj-validator'
+import { InvalidCpfError } from './errors/invalid-cpf'
 
 export class CreateUserUseCase implements UseCase<CreateUserResponse> {
   constructor(
@@ -19,6 +19,13 @@ export class CreateUserUseCase implements UseCase<CreateUserResponse> {
     payload: CreateUserRequest
   ): Promise<UseCaseReponse<CreateUserResponse>> {
     try {
+      if (!cpf.isValid(payload.cpf)) {
+        return {
+          isSuccess: false,
+          error: new InvalidCpfError()
+        }
+      }
+
       if (payload.password !== payload.confirmPassword) {
         return {
           isSuccess: false,
@@ -26,14 +33,8 @@ export class CreateUserUseCase implements UseCase<CreateUserResponse> {
         }
       }
 
-      if (!cpf.isValid(payload.cpf)) {
-        return {
-          isSuccess: false,
-          error: new InvalidCpf()
-        }
-      }
-
       const findUserByCpf = await this.userRepository.findOneByCpf(payload.cpf)
+
       const findUserByEmail = await this.userRepository.findOneByEmail(
         payload.email
       )

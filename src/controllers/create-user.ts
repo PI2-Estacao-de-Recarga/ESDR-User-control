@@ -1,6 +1,6 @@
 import { CreateUserError } from '../usecases/create-user/errors/create-user-error'
 import { DifferentPasswords } from '../usecases/create-user/errors/different-passwords-error'
-import { InvalidCpf } from '../usecases/create-user/errors/invalid-cpf'
+import { InvalidCpfError } from '../usecases/create-user/errors/invalid-cpf'
 import { UserAlreadyExistsError } from '../usecases/create-user/errors/user-already-exists-error'
 import { CreateUserUseCase } from '../usecases/create-user/use-case'
 import { Controller } from './domain/controller'
@@ -36,12 +36,12 @@ export class CreateUserController extends Controller {
       return badRequest(response.error)
     } else if (
       !response.isSuccess &&
-      response.error instanceof InvalidCpf
+      response.error instanceof UserAlreadyExistsError
     ) {
       return badRequest(response.error)
     } else if (
       !response.isSuccess &&
-      response.error instanceof UserAlreadyExistsError
+      response.error instanceof InvalidCpfError
     ) {
       return badRequest(response.error)
     } else if (
