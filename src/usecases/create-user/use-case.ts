@@ -33,13 +33,6 @@ export class CreateUserUseCase implements UseCase<CreateUserResponse> {
         }
       }
 
-      if (!cpf.isValid(payload.cpf)) {
-        return {
-          isSuccess: false,
-          error: new InvalidCpf()
-        }
-      }
-
       const findUserByCpf = await this.userRepository.findOneByCpf(payload.cpf)
 
       const findUserByEmail = await this.userRepository.findOneByEmail(
