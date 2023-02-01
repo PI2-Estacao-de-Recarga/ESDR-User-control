@@ -3,12 +3,12 @@ import path from 'path'
 
 const connectOptions: DataSourceOptions = {
   type: 'postgres',
-  host: process.env.HOST,
+  database: process.env.DATABASE,
   url: process.env.DATABASE_URL,
   port: Number(process.env.DB_PORT),
-  username: process.env.USER,
+  host: process.env.HOST,
   password: process.env.PASSWORD,
-  database: process.env.DATABASE,
+  username: process.env.USER,
   synchronize: true,
   entities: [`${path.join(__dirname, '/entities/*{.ts, .js}')}`],
   migrations: [`${path.join(__dirname, '/migrations/*{.ts, .js}')}`],
