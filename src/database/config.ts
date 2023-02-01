@@ -12,7 +12,8 @@ const connectOptions: DataSourceOptions = {
   synchronize: true,
   entities: [`${path.join(__dirname, '/entities/*{.ts, .js}')}`],
   migrations: [`${path.join(__dirname, '/migrations/*{.ts, .js}')}`],
-  migrationsRun: true
+  migrationsRun: true,
+  ssl: { rejectUnauthorized: false }
 }
 
 export const dataSource = new DataSource(connectOptions)
