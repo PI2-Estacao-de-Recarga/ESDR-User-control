@@ -24,6 +24,7 @@ export class CreateUserUseCase implements UseCase<CreateUserResponse> {
         }
       }
       const findUserByCpf = await this.userRepository.findOneByCpf(payload.cpf)
+
       const findUserByEmail = await this.userRepository.findOneByEmail(
         payload.email
       )
