@@ -2,19 +2,19 @@ import { PlugNameEnum } from '../enums/plugName'
 import { User } from '../user'
 
 export type Plug = {
-    id?: string
+  id?: string
 
-    name: PlugNameEnum
+  name: PlugNameEnum
 
-    inUse: boolean
+  inUse: boolean
 
-    dateTimeActivated: Date
+  dateTimeActivated: Date
 
-    dateTimeToDeactivate: Date
+  dateTimeToDeactivate: Date
 
-    createdAt?: Date
+  createdAt?: Date
 
-    updatedAt?: Date
+  updatedAt?: Date
 
-    user?: User
+  user?: User
 }

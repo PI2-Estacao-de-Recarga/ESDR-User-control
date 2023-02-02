@@ -23,25 +23,13 @@ export class SetPlugController extends Controller {
     const response = await this.setPlug.execute(params)
     if (response.isSuccess && response.body) {
       return success(response.body)
-    } else if (
-      !response.isSuccess &&
-      response.error instanceof GetUserError
-    ) {
+    } else if (!response.isSuccess && response.error instanceof GetUserError) {
       return badRequest(response.error)
-    } else if (
-      !response.isSuccess &&
-      response.error instanceof SetPlugError
-    ) {
+    } else if (!response.isSuccess && response.error instanceof SetPlugError) {
       return badRequest(response.error)
-    } else if (
-      !response.isSuccess &&
-      response.error instanceof PlugNameError
-    ) {
+    } else if (!response.isSuccess && response.error instanceof PlugNameError) {
       return badRequest(response.error)
-    } else if (
-      !response.isSuccess &&
-      response.error instanceof GetPlugError
-    ) {
+    } else if (!response.isSuccess && response.error instanceof GetPlugError) {
       return badRequest(response.error)
     } else {
       return serverError(response.error)

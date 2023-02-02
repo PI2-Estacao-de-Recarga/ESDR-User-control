@@ -38,22 +38,24 @@ export class GetPlugsUseCase implements UseCase<Plug[]> {
           if (userId) {
             // inUse + userId
             plugsFound.forEach((plug, i) => {
-              if (plug.inUse === inUse && plug.user.id === userId) {
+              if (plug.inUse === inUse && plug.user?.id === userId) {
                 plugsMatch.push(plug)
               }
             })
           } else {
             // inUse
+
             plugsFound.forEach((plug, i) => {
               if (plug.inUse === inUse) {
                 plugsMatch.push(plug)
               }
             })
+            console.log(plugsMatch)
           }
         } else {
           // userId
           plugsFound.forEach((plug, i) => {
-            if (plug.user.id === userId) {
+            if (plug.user?.id === userId) {
               plugsMatch.push(plug)
             }
           })
