@@ -4,7 +4,7 @@ import { UseCase, UseCaseReponse } from '../domain/use-case'
 import { GetPlugError } from '../set-plug/errors/get-plug-error'
 
 export interface FindPlugs {
-  inUse?: boolean
+  inUse?: string
   userId?: string
 }
 
@@ -14,6 +14,8 @@ export class GetPlugsUseCase implements UseCase<Plug[]> {
   async execute({ inUse, userId }: FindPlugs): Promise<UseCaseReponse<Plug[]>> {
     try {
       const plugsMatch: Plug[] = []
+
+      const inUseBool: Boolean = inUse === 'true'
 
       const plugOne = await this.plugRepository.findOneByName('Tomada 1')
       const plugTwo = await this.plugRepository.findOneByName('Tomada 2')
@@ -38,7 +40,7 @@ export class GetPlugsUseCase implements UseCase<Plug[]> {
           if (userId) {
             // inUse + userId
             plugsFound.forEach((plug, i) => {
-              if (plug.inUse === inUse && plug.user?.id === userId) {
+              if (plug.inUse === inUseBool && plug.user?.id === userId) {
                 plugsMatch.push(plug)
               }
             })
@@ -46,7 +48,7 @@ export class GetPlugsUseCase implements UseCase<Plug[]> {
             // inUse
 
             plugsFound.forEach((plug, i) => {
-              if (plug.inUse === inUse) {
+              if (plug.inUse === inUseBool) {
                 plugsMatch.push(plug)
               }
             })

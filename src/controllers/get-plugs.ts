@@ -5,7 +5,7 @@ import { Plug } from '../database/entities/plug'
 import { GetPlugError } from '../usecases/set-plug/errors/get-plug-error'
 
 type HttpRequest = {
-    inUse?: boolean
+    inUse?: string
     userId?: string
 }
 type Model = Error | Plug[]
